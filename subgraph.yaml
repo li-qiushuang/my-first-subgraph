@@ -1,0 +1,26 @@
+specVersion: 1.3.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: AppProxyUpgradeable
+    network: mainnet
+    source:
+      address: "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
+      abi: AppProxyUpgradeable
+      startBlock: 11473216
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.9
+      language: wasm/assemblyscript
+      entities:
+        - ProxyDeposit
+      abis:
+        - name: AppProxyUpgradeable
+          file: ./abis/AppProxyUpgradeable.json
+      eventHandlers:
+        - event: ProxyDeposit(address,uint256)
+          handler: handleProxyDeposit
+      file: ./src/app-proxy-upgradeable.ts
