@@ -1,26 +1,24 @@
 specVersion: 1.3.0
-indexerHints:
-  prune: auto
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: AppProxyUpgradeable
-    network: mainnet
+    name: AppProxyUpgradeable  # 修改为与ABI中的合约名称匹配
+    network: mainnet  # 或 sepolia，根据你的网络
     source:
-      address: "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
-      abi: AppProxyUpgradeable
-      startBlock: 11473216
+      address: "0xae7ab96520de3a18e5e111b5eaab095312d7fe84"
+      abi: AppProxyUpgradeable  # 修改为与ABI中的合约名称匹配
+      startBlock: 23175950  # 设置合适的起始区块
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.9
+      apiVersion: 0.0.7
       language: wasm/assemblyscript
-      entities:
-        - ProxyDeposit
+      entities: # entities 列出了希望在后端GraphQL数据库中创建并存储的“表”
+        - Transfer #这个实体的具体字段（如 from, to, value, timestamp 等）会在另一个文件（通常是 schema.graphql）中详细定义
       abis:
-        - name: AppProxyUpgradeable
-          file: ./abis/AppProxyUpgradeable.json
-      eventHandlers:
-        - event: ProxyDeposit(address,uint256)
-          handler: handleProxyDeposit
-      file: ./src/app-proxy-upgradeable.ts
+        - name: AppProxyUpgradeable  # 修改为与ABI中的合约名称匹配 #给你要索引的合约ABI起一个名字，方便在后面的映射文件中引用
+          file: ./abis/Contract.json  # 指定存储该合约ABI的JSON文件路径
+      eventHandlers: #建立“区块链事件”和“处理函数”之间的映射关系
+        - event: Transfer(indexed address,indexed address,uint256) #指定你要监听的特定事件
+          handler: handleTransfer #指定当节点监听到上述 Transfer 事件时，应该调用哪个函数来处理
+      file: ./src/mapping.ts #所有事件处理函数（如 handleTransfer）的代码文件路径

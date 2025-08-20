@@ -9,7 +9,7 @@ import {
 import { Address, BigInt } from "@graphprotocol/graph-ts"
 import { ProxyDeposit } from "../generated/schema"
 import { ProxyDeposit as ProxyDepositEvent } from "../generated/AppProxyUpgradeable/AppProxyUpgradeable"
-import { handleProxyDeposit } from "../src/app-proxy-upgradeable"
+import { handleProxyDeposit } from "../src/mapping"
 import { createProxyDepositEvent } from "./app-proxy-upgradeable-utils"
 
 // Tests structure (matchstick-as >=0.5.0)

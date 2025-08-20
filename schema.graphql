@@ -1,8 +1,10 @@
-type ProxyDeposit @entity(immutable: true) {
-  id: Bytes!
-  sender: Bytes! # address
-  value: BigInt! # uint256
+type Transfer @entity(immutable: true) {
+  id: ID!
+  from: Bytes!
+  to: Bytes!
+  amount: BigInt!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+ 
